@@ -23,8 +23,12 @@ end
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  fail "Unimplemented"
+  body = page.body
+  all_matches = body.scan(/(#{e1}|#{e2})/)
+  right_matches = [[e1],[e1],[e2],[e2]]
+  all_matches.should eq right_matches
+ 
+
 end
 
 # Make it easier to express checking or unchecking several boxes at once
