@@ -1,0 +1,139 @@
+From 21137fb9702768ed9de18bb6074aa4e2d0a144e1 Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 17:17:22 -0400
+Subject: [PATCH 01/11] parts 1 and 2 done
+
+---
+ rottenpotatoes/.ruby-version                  |  1 +
+ rottenpotatoes/Gemfile.lock                   |  2 +-
+ rottenpotatoes/db/schema.rb                   |  4 +--
+ .../features/filter_movie_list.feature        | 14 +++++----
+ .../features/step_definitions/movie_steps.rb  | 30 +++++++++++++++----
+ .../features/step_definitions/web_steps.rb    |  1 +
+ 6 files changed, 37 insertions(+), 15 deletions(-)
+ create mode 100644 rottenpotatoes/.ruby-version
+
+diff --git a/rottenpotatoes/.ruby-version b/rottenpotatoes/.ruby-version
+new file mode 100644
+index 0000000..197c4d5
+--- /dev/null
++++ b/rottenpotatoes/.ruby-version
+@@ -0,0 +1 @@
++2.4.0
+diff --git a/rottenpotatoes/Gemfile.lock b/rottenpotatoes/Gemfile.lock
+index 7188613..1964e12 100644
+--- a/rottenpotatoes/Gemfile.lock
++++ b/rottenpotatoes/Gemfile.lock
+@@ -212,4 +212,4 @@ RUBY VERSION
+    ruby 2.4.0p0
+ 
+ BUNDLED WITH
+-   1.16.1
++   2.1.4
+diff --git a/rottenpotatoes/db/schema.rb b/rottenpotatoes/db/schema.rb
+index 40171ba..7721abf 100644
+--- a/rottenpotatoes/db/schema.rb
++++ b/rottenpotatoes/db/schema.rb
+@@ -14,8 +14,8 @@
+ ActiveRecord::Schema.define(version: 20111119180638) do
+ 
+   create_table "movies", force: :cascade do |t|
+-    t.string   "title",        limit: 255
+-    t.string   "rating",       limit: 255
++    t.string   "title"
++    t.string   "rating"
+     t.text     "description"
+     t.datetime "release_date"
+     t.datetime "created_at"
+diff --git a/rottenpotatoes/features/filter_movie_list.feature b/rottenpotatoes/features/filter_movie_list.feature
+index 1a71bad..05a813e 100644
+--- a/rottenpotatoes/features/filter_movie_list.feature
++++ b/rottenpotatoes/features/filter_movie_list.feature
+@@ -23,11 +23,13 @@ Background: movies have been added to database
+   Then 10 seed movies should exist
+ 
+ Scenario: restrict to movies with 'PG' or 'R' ratings
+-  # enter step(s) to check the 'PG' and 'R' checkboxes
+-  # enter step(s) to uncheck all other checkboxes
+-  # enter step to "submit" the search form on the homepage
+-  # enter step(s) to ensure that PG and R movies are visible
+-  # enter step(s) to ensure that other movies are not visible
++  When I check the following ratings: PG, R
++  When I uncheck the following ratings: G, PG-13, NC-17 
++  When I press "ratings_submit"
++  Then I should see "The Terminator"
++  And I should see "The Incredibles"
++  Then I should not see "Chicken Run"
++  And I should not see "The Help"
+ 
+ Scenario: all ratings selected
+-  # see assignment
++  Then I should see all the movies
+diff --git a/rottenpotatoes/features/step_definitions/movie_steps.rb b/rottenpotatoes/features/step_definitions/movie_steps.rb
+index 0444d79..ed9e37d 100644
+--- a/rottenpotatoes/features/step_definitions/movie_steps.rb
++++ b/rottenpotatoes/features/step_definitions/movie_steps.rb
+@@ -2,10 +2,16 @@
+ 
+ Given /the following movies exist/ do |movies_table|
+   movies_table.hashes.each do |movie|
++    
++    # puts movie[:title]
++    # puts movie[:rating]
++    # puts movie[:release_date]
++    Movie.create!(title: movie[:title], rating: movie[:rating], release_date: movie[:release_date]) 
++    
+     # each returned element will be a hash whose key is the table header.
+     # you should arrange to add that movie to the database here.
+   end
+-  fail "Unimplemented"
++  # fail "Unimplemented"
+ end
+ 
+ Then /(.*) seed movies should exist/ do | n_seeds |
+@@ -26,13 +32,25 @@ end
+ #  "When I check the following ratings: G"
+ 
+ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
+-  # HINT: use String#split to split up the rating_list, then
+-  #   iterate over the ratings and reuse the "When I check..." or
+-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+-  fail "Unimplemented"
++  ratings = rating_list.split(', ')
++  if uncheck
++    ratings.each do |rating|
++      steps %{
++        When I uncheck "ratings_#{rating}"
++      }
++    end    
++  else
++    ratings.each do |rating|
++      steps %{
++        When I check "ratings_#{rating}"
++      }
++    end
++  end 
++ 
++  # fail "Unimplemented"
+ end
+ 
+ Then /I should see all the movies/ do
+   # Make sure that all the movies in the app are visible in the table
+-  fail "Unimplemented"
++  page.should have_css("table#movies tr", :count=>11)
+ end
+diff --git a/rottenpotatoes/features/step_definitions/web_steps.rb b/rottenpotatoes/features/step_definitions/web_steps.rb
+index 4d9aab6..9ee8bc4 100644
+--- a/rottenpotatoes/features/step_definitions/web_steps.rb
++++ b/rottenpotatoes/features/step_definitions/web_steps.rb
+@@ -87,6 +87,7 @@ When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
+ end
+ 
+ When /^(?:|I )check "([^"]*)"$/ do |field|
++  # puts page.html
+   check(field)
+ end
+ 
+-- 
+2.17.1
+

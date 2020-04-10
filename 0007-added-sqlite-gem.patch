@@ -1,0 +1,24 @@
+From 79d0d7f5601a804e94a9d21437f447dcb72c589e Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 19:15:45 -0400
+Subject: [PATCH 07/11] added sqlite gem
+
+---
+ Gemfile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Gemfile b/Gemfile
+index f0a9d9b..95486d4 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -23,6 +23,7 @@ group :test do
+ end
+ group :production do
+   # gem 'pg'
++  gem 'sqlite3'
+ end
+ 
+ # Gems used only for assets and not required
+-- 
+2.17.1
+

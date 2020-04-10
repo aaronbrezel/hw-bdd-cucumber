@@ -1,0 +1,25 @@
+From 79fdbd6a7f96a6f2c9ad82bf936ebc2f96b1296b Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 19:21:52 -0400
+Subject: [PATCH 09/11] added pg version
+
+---
+ Gemfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Gemfile b/Gemfile
+index 2adf973..3682ef3 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -22,7 +22,7 @@ group :test do
+   gem 'cucumber-rails-training-wheels'
+ end
+ group :production do
+-  gem 'pg'
++  gem 'pg', '~> 0.21'
+ end
+ 
+ # Gems used only for assets and not required
+-- 
+2.17.1
+

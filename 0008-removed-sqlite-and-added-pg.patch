@@ -1,0 +1,26 @@
+From 8441045d3865be4d0dc36de6cc109072388ad44c Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 19:16:35 -0400
+Subject: [PATCH 08/11] removed sqlite and added pg
+
+---
+ Gemfile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Gemfile b/Gemfile
+index 95486d4..2adf973 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -22,8 +22,7 @@ group :test do
+   gem 'cucumber-rails-training-wheels'
+ end
+ group :production do
+-  # gem 'pg'
+-  gem 'sqlite3'
++  gem 'pg'
+ end
+ 
+ # Gems used only for assets and not required
+-- 
+2.17.1
+

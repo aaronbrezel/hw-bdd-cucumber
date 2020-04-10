@@ -1,0 +1,24 @@
+From 824b98eea183c83de39c9f348ace236fee7ef4f8 Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Thu, 9 Apr 2020 10:49:09 -0400
+Subject: [PATCH 10/11] added older version of bundler
+
+---
+ Gemfile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Gemfile b/Gemfile
+index 3682ef3..989e69a 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -23,6 +23,7 @@ group :test do
+ end
+ group :production do
+   gem 'pg', '~> 0.21'
++  gem 'rails_12factor'
+ end
+ 
+ # Gems used only for assets and not required
+-- 
+2.17.1
+

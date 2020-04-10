@@ -1,0 +1,25 @@
+From b199e2892eca89e2adced6d1f316623b8fe27dc6 Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 19:11:12 -0400
+Subject: [PATCH 06/11] commented out pg
+
+---
+ Gemfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Gemfile b/Gemfile
+index 2adf973..f0a9d9b 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -22,7 +22,7 @@ group :test do
+   gem 'cucumber-rails-training-wheels'
+ end
+ group :production do
+-  gem 'pg'
++  # gem 'pg'
+ end
+ 
+ # Gems used only for assets and not required
+-- 
+2.17.1
+

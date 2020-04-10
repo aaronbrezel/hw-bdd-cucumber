@@ -1,0 +1,21 @@
+From ae058b1194794d7caafd3517466228a379ac01df Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 18:51:11 -0400
+Subject: [PATCH 03/11] add procfile
+
+---
+ rottenpotatoes/Procfile | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 rottenpotatoes/Procfile
+
+diff --git a/rottenpotatoes/Procfile b/rottenpotatoes/Procfile
+new file mode 100644
+index 0000000..a5085a5
+--- /dev/null
++++ b/rottenpotatoes/Procfile
+@@ -0,0 +1 @@
++web: bundle exec rackup config.ru -p $PORT
+\ No newline at end of file
+-- 
+2.17.1
+

@@ -1,0 +1,47 @@
+From 2e3f6070ee25b40fe17ed3ff302bdb5e715e0858 Mon Sep 17 00:00:00 2001
+From: Aaron Brezel <aaronbrezel@gmail.com>
+Date: Wed, 8 Apr 2020 18:19:09 -0400
+Subject: [PATCH 02/11] finished part 3
+
+---
+ rottenpotatoes/features/sort_movie_list.feature         | 4 ++--
+ rottenpotatoes/features/step_definitions/movie_steps.rb | 8 ++++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/rottenpotatoes/features/sort_movie_list.feature b/rottenpotatoes/features/sort_movie_list.feature
+index c245736..890b5f5 100644
+--- a/rottenpotatoes/features/sort_movie_list.feature
++++ b/rottenpotatoes/features/sort_movie_list.feature
+@@ -24,8 +24,8 @@ Background: movies have been added to database
+ 
+ Scenario: sort movies alphabetically
+   When I follow "Movie Title"
+-  # your steps here
++  Then I should see "Chocolat" before "The Help"
+ 
+ Scenario: sort movies in increasing order of release date
+   When I follow "Release Date"
+-  # your steps here
++  Then I should see "Raiders of the Lost Ark" before "The Incredibles"
+diff --git a/rottenpotatoes/features/step_definitions/movie_steps.rb b/rottenpotatoes/features/step_definitions/movie_steps.rb
+index ed9e37d..2bfecd5 100644
+--- a/rottenpotatoes/features/step_definitions/movie_steps.rb
++++ b/rottenpotatoes/features/step_definitions/movie_steps.rb
+@@ -23,8 +23,12 @@ end
+ 
+ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
+   #  ensure that that e1 occurs before e2.
+-  #  page.body is the entire content of the page as a string.
+-  fail "Unimplemented"
++  body = page.body
++  all_matches = body.scan(/(#{e1}|#{e2})/)
++  right_matches = [[e1],[e1],[e2],[e2]]
++  all_matches.should eq right_matches
++ 
++
+ end
+ 
+ # Make it easier to express checking or unchecking several boxes at once
+-- 
+2.17.1
+
